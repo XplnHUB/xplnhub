@@ -1,0 +1,20 @@
+export interface Repository {
+  name: string;
+  language: string;
+  description: string;
+  url: string;
+  highlights: string[];
+}
+
+export interface Contributor {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  contributions: number;
+}
+
+export interface WorkflowStep {
+  title: string;
+  description: string;
+  icon: string;
+}
