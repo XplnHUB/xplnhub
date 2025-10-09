@@ -40,7 +40,7 @@ Welcome to **XplnHUB**, where we believe technology should be understandable and
 We’re always looking for contributors to help us build and improve our projects. Whether you’re an experienced developer or a student looking to gain experience, your contributions are welcome!
 
 * **Contribute:** Start by reading the `CONTRIBUTING.md` file in each repository.
-* **Contact:** Questions? Open an issue in the `.github` repository.
+* **Contact:** Questions? Open an issue in the `.github` repository
 
 Thank you for your interest in **XplnHUB**! We’re excited to create, learn, and innovate together.
 
