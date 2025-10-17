@@ -4,6 +4,8 @@ export interface Repository {
   description: string;
   url: string;
   highlights: string[];
+  stars?: number;  
+  forks?: number;  
 }
 
 export interface Contributor {

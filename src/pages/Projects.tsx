@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Star, GitFork, Code2 } from 'lucide-react';
 import { Repository } from '../types';
 
 const Projects = () => {
-  const repositories: Repository[] = [
+  const [repositories, setRepositories] = useState<Repository[]>([
     {
       name: 'CodeNarrator',
       language: 'JavaScript',
@@ -56,7 +57,36 @@ const Projects = () => {
         'Code quality metrics',
       ],
     }
-  ];
+  ]);
+
+  // 🧠 Fetch star and fork counts dynamically
+  useEffect(() => {
+    async function fetchRepoStats() {
+      const updatedRepos = await Promise.all(
+        repositories.map(async (repo) => {
+          try {
+            const res = await fetch(
+              `https://api.github.com/repos/XplnHUB/${repo.name}`
+            );
+            if (!res.ok) throw new Error('Failed to fetch repo');
+            const data = await res.json();
+            return {
+              ...repo,
+              stars: data.stargazers_count,
+              forks: data.forks_count,
+            };
+          } catch (error) {
+            console.error(`Error fetching ${repo.name}:`, error);
+            return repo;
+          }
+        })
+      );
+
+      setRepositories(updatedRepos);
+    }
+
+    fetchRepoStats();
+  }, []);
 
   const languageColors: { [key: string]: string } = {
     JavaScript: '#f7df1e',
@@ -111,6 +141,7 @@ const Projects = () => {
                         </div>
                       </div>
                     </div>
+
                   </div>
 
                   <p className="text-gray-300 text-lg mb-6 leading-relaxed">
@@ -144,24 +175,22 @@ const Projects = () => {
                       <ExternalLink className="w-5 h-5" />
                       <span>View on GitHub</span>
                     </motion.a>
-
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold flex items-center space-x-2 border border-cyan-400/50 hover:border-cyan-400 transition-all"
-                    >
-                      <Star className="w-5 h-5" />
-                      <span>Star</span>
-                    </motion.button>
-
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold flex items-center space-x-2 border border-cyan-400/50 hover:border-cyan-400 transition-all"
-                    >
-                      <GitFork className="w-5 h-5" />
-                      <span>Fork</span>
-                    </motion.button>
+                    {(repo.stars || repo.forks) && (
+                      <div className="flex items-center gap-4 text-gray-300 text-sm">
+                        <div className="flex items-center gap-1">
+                          <a href={repo.url}><Star size={16} className="text-yellow-400" /></a>
+                          <a href={repo.url}><span>No. of Stars :</span></a>
+                          <span>{repo.stars ?? 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <a href={repo.url}>
+                            <GitFork size={16} className="text-blue-400" />
+                          </a>
+                          <a href={repo.url}><span>No. of Forks :</span></a>
+                          <span>{repo.forks ?? 0}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
