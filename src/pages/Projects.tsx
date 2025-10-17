@@ -177,7 +177,7 @@ const Projects = () => {
                     </motion.a>
                     {(repo.stars || repo.forks) && (
                       <div className="flex items-center gap-4 text-gray-300 text-sm">
-                        {/*Number of stars existing for the repo*/}
+                        {/*Number of stars //*/}
                         <div className="flex items-center gap-1">
                           <a href={repo.url}><Star size={16} className="text-yellow-400" /></a>
                           <a href={repo.url}><span>No. of Stars :</span></a>
