@@ -35,9 +35,7 @@ const Contributors = () => {
             } else {
               contributorMap.set(contributor.login, {
                 ...contributor,
-                name: userData.name
-                  ? `${userData.name} (${contributor.login})`
-                  : contributor.login,
+                name: userData.name?.trim() ? userData.name.trim() : undefined,
               });
             }
           }
@@ -161,9 +159,13 @@ const Contributors = () => {
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                    {contributor.name}
+                  <h3 className="text-xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">
+                    {contributor.name || contributor.login}
                   </h3>
+
+                  <span className="inline-flex items-center px-3 py-1 mb-3 text-xs font-semibold text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
+                    @{contributor.login}
+                  </span>
 
                   <p className="text-sm text-gray-400 mb-3">
                     {contributor.contributions.toLocaleString()} contributions

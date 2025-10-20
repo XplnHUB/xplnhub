@@ -13,6 +13,7 @@ export interface Contributor {
   avatar_url: string;
   html_url: string;
   contributions: number;
+  name: string;
 }
 
 export interface WorkflowStep {
