@@ -22,13 +22,25 @@ const Contributors = () => {
         );
         if (response.ok) {
           const data = await response.json();
-          data.forEach((contributor: Contributor) => {
+          for (const contributor of data) {
+            // Fetch additional user details (for full name)
+            const userResponse = await fetch(`https://api.github.com/users/${contributor.login}`);
+            let userData: any = {};
+            if (userResponse.ok) {
+              userData = await userResponse.json();
+            }
+
             if (contributorMap.has(contributor.login)) {
               contributorMap.get(contributor.login)!.contributions += contributor.contributions;
             } else {
-              contributorMap.set(contributor.login, { ...contributor });
+              contributorMap.set(contributor.login, {
+                ...contributor,
+                name: userData.name
+                  ? `${userData.name} (${contributor.login})`
+                  : contributor.login,
+              });
             }
-          });
+          }
         }
       }
 
@@ -150,7 +162,7 @@ const Contributors = () => {
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                    {contributor.login}
+                    {contributor.name}
                   </h3>
 
                   <p className="text-sm text-gray-400 mb-3">
@@ -179,7 +191,6 @@ const Contributors = () => {
           </motion.div>
         )}
 
-        {/* --- CTA Section --- */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
