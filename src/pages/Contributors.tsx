@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Users, ExternalLink, Heart, Award } from "lucide-react";
+import { Users, ExternalLink, Heart, Award, GitCommit } from "lucide-react";
 import { Contributor } from "../types";
 
 const Contributors = () => {
@@ -126,56 +126,67 @@ const Contributors = () => {
                 aria-label={`View GitHub profile of ${contributor.login}`}
               >
 
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-br from-cyan-500 to-blue-500 blur-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="flex flex-col items-center text-center relative z-10">
-                  <div className="relative mb-4">
-                    <motion.img
-                      whileHover={{ scale: 1.1 }}
-                      src={contributor.avatar_url}
-                      alt={`Avatar of ${contributor.login}`}
-                      loading="lazy"
-                      className={`w-24 h-24 rounded-full border-4 ${
-                        index === 0
-                          ? "border-yellow-400 shadow-[0_0_20px_#facc15]"
-                          : index === 1
-                          ? "border-gray-300 shadow-[0_0_20px_#d1d5db]"
-                          : index === 2
-                          ? "border-amber-600 shadow-[0_0_20px_#f59e0b]"
-                          : "border-cyan-500/50 group-hover:border-cyan-400"
-                      } transition-all duration-300`}
-                    />
+                <div className="relative z-10 flex flex-col items-center text-center px-1">
+                  <div className="w-full">
+                    <div className="relative">
+                      <div className="h-20 w-full rounded-2xl bg-gradient-to-r from-cyan-500/40 via-blue-600/40 to-purple-600/40 opacity-80 group-hover:opacity-100 transition-all duration-300" />
 
-                    {index < 3 && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.5 + index * 0.1, type: "spring" }}
-                        className="absolute -top-3 -right-3 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg"
-                        aria-label={`Top ${index + 1} contributor`}
-                      >
-                        <Award className="w-5 h-5 text-white" aria-hidden="true" />
-                      </motion.div>
-                    )}
+                      <motion.img
+                        whileHover={{ scale: 1.08 }}
+                        src={contributor.avatar_url}
+                        alt={`Avatar of ${contributor.login}`}
+                        loading="lazy"
+                        className={`w-24 h-24 rounded-full border-[3px] shadow-xl absolute left-1/2 -translate-x-1/2 -bottom-12 ${
+                          index === 0
+                            ? "border-yellow-400 shadow-[0_0_25px_#facc15]"
+                            : index === 1
+                            ? "border-gray-300 shadow-[0_0_25px_#d1d5db]"
+                            : index === 2
+                            ? "border-amber-500 shadow-[0_0_25px_#f59e0b]"
+                            : "border-cyan-400/60 group-hover:border-cyan-300"
+                        } transition-all duration-300`}
+                      />
+
+                      {index < 3 && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.5 + index * 0.1, type: "spring" }}
+                          className="absolute -top-4 right-6 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg"
+                          aria-label={`Top ${index + 1} contributor`}
+                        >
+                          <Award className="w-5 h-5 text-white" aria-hidden="true" />
+                        </motion.div>
+                      )}
+                    </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">
-                    {contributor.name || contributor.login}
-                  </h3>
+                  <div className="pt-14 pb-3 flex flex-col items-center gap-2 w-full">
+                    <h3 className="text-xl font-semibold text-white group-hover:text-cyan-200 transition-colors">
+                      {contributor.name}
+                    </h3>
 
-                  <span className="inline-flex items-center px-3 py-1 mb-3 text-xs font-semibold text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
-                    @{contributor.login}
-                  </span>
+                    <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold tracking-[0.25em] uppercase text-cyan-100/80 bg-white/5 border border-cyan-500/30 rounded-full">
+                      @{contributor.login}
+                    </span>
 
-                  <p className="text-sm text-gray-400 mb-3">
-                    {contributor.contributions.toLocaleString()} contributions
-                  </p>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/30 rounded-full shadow-inner shadow-cyan-500/20">
+                      <GitCommit className="w-4 h-4" aria-hidden="true" />
+                      <span>{contributor.contributions.toLocaleString()} contributions</span>
+                    </div>
+
+                    <p className="text-xs text-gray-400 max-w-[14rem] leading-relaxed">
+                      Helping drive the XplnHUB mission forward.
+                    </p>
+                  </div>
 
                   <motion.div
                     whileHover={{ x: 5 }}
-                    className="flex items-center space-x-2 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="flex items-center gap-2 text-cyan-200 font-medium opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <span className="text-sm font-medium">View Profile</span>
+                    <span className="text-sm">View Profile</span>
                     <ExternalLink className="w-4 h-4" aria-hidden="true" />
                   </motion.div>
                 </div>
