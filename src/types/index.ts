@@ -4,6 +4,8 @@ export interface Repository {
   description: string;
   url: string;
   highlights: string[];
+  stars?: number;  // Fetch Number of stars on the repo
+  forks?: number;  // Fetch Number of forks on the repo
 }
 
 export interface Contributor {
