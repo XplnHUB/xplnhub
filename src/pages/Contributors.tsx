@@ -6,49 +6,89 @@ import { Contributor } from "../types";
 const Contributors = () => {
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchContributors();
   }, []);
 
   const fetchContributors = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const repos = ["CodeNarrator", "Finmate", "Insight-Py", "xplnhub-insight-py"];
+      type GitHubRepo = {
+        name: string;
+        contributors_url: string;
+        fork?: boolean;
+        archived?: boolean;
+      };
+
+      const repoResponse = await fetch(
+        "https://api.github.com/orgs/XplnHUB/repos?per_page=100&type=public"
+      );
+      if (!repoResponse.ok) {
+        throw new Error(`Failed to fetch repositories: ${repoResponse.status}`);
+      }
+
+      const repoList = (await repoResponse.json()) as GitHubRepo[];
       const contributorMap = new Map<string, Contributor>();
+      const userNameCache = new Map<string, string>();
 
-      for (const repo of repos) {
-        const response = await fetch(
-          `https://api.github.com/repos/XplnHUB/${repo}/contributors`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          for (const contributor of data) {
-            // Fetch additional user details (for full name)
-            const userResponse = await fetch(`https://api.github.com/users/${contributor.login}`);
-            let userData: any = {};
-            if (userResponse.ok) {
-              userData = await userResponse.json();
-            }
+      for (const repo of repoList) {
+        if (repo.fork || repo.archived) {
+          continue;
+        }
 
-            if (contributorMap.has(contributor.login)) {
-              contributorMap.get(contributor.login)!.contributions += contributor.contributions;
-            } else {
-              contributorMap.set(contributor.login, {
-                ...contributor,
-                name: userData.name?.trim() ? userData.name.trim() : undefined,
-              });
-            }
+        const response = await fetch(`${repo.contributors_url}?per_page=100`);
+        if (!response.ok) {
+          continue;
+        }
+
+        const data = await response.json();
+        for (const contributor of data) {
+          if (contributorMap.has(contributor.login)) {
+            contributorMap.get(contributor.login)!.contributions += contributor.contributions;
+          } else {
+            contributorMap.set(contributor.login, {
+              ...contributor,
+              name: contributor.login,
+            });
           }
         }
       }
 
-      const allContributors = Array.from(contributorMap.values()).sort(
-        (a, b) => b.contributions - a.contributions
+      const contributorEntries = Array.from(contributorMap.entries());
+
+      await Promise.all(
+        contributorEntries.map(async ([login]) => {
+          if (userNameCache.has(login)) {
+            return;
+          }
+
+          const userResponse = await fetch(`https://api.github.com/users/${login}`);
+          if (!userResponse.ok) {
+            return;
+          }
+
+          const userData = await userResponse.json();
+          userNameCache.set(login, userData.name?.trim() ? userData.name.trim() : "");
+        })
       );
+
+      const allContributors = contributorEntries
+        .map(([login, contributor]) => {
+          const displayName = userNameCache.get(login);
+          return {
+            ...contributor,
+            name: displayName ? displayName : contributor.login,
+          };
+        })
+        .sort((a, b) => b.contributions - a.contributions);
 
       setContributors(allContributors);
     } catch (error) {
       console.error("Error fetching contributors:", error);
+      setError("Unable to load contributors right now. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -95,7 +135,16 @@ const Contributors = () => {
             </p>
           </div>
         </motion.div>
-        {loading ? (
+        {error ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20 bg-white/5 backdrop-blur-sm rounded-3xl border border-cyan-500/20"
+          >
+            <Users className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+            <p className="text-gray-400 text-lg">{error}</p>
+          </motion.div>
+        ) : loading ? (
           <div className="flex flex-col items-center justify-center py-20">
             <motion.div
               animate={{ rotate: 360 }}
