@@ -39,14 +39,14 @@ const Join = () => {
       icon: Github,
       title: 'View Issues on GitHub',
       description: 'Browse open issues and find tasks that match your skills',
-      url: 'https://github.com/XplnHUB',
+      url: 'https://github.com/XplnHUB/xplnhub/issues',
       color: 'from-cyan-500 to-blue-500',
     },
     {
       icon: FileText,
       title: 'Read CONTRIBUTING.md',
       description: 'Learn our contribution guidelines and code standards',
-      url: 'https://github.com/XplnHUB',
+      url: 'https://github.com/XplnHUB/xplnhub/blob/main/CONTRIBUTING.md',
       color: 'from-blue-500 to-purple-500',
     },
     {
@@ -197,7 +197,7 @@ const Join = () => {
                 <span>Browse Good First Issues</span>
               </motion.a>
               <motion.a
-                href="https://github.com/XplnHUB"
+                href="https://github.com/XplnHUB/xplnhub/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
