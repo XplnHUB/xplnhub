@@ -1,48 +1,101 @@
-# XplnHUB
+# XplnHub
 
-Welcome to **XplnHUB**, where we believe technology should be understandable and accessible to everyone. Our mission is to build tools and resources that simplify complex concepts, empowering developers and students to learn, create, and innovate with confidence.
+**XplnHub** is an open-source organization where we learn by building.  
+We create real-world, impactful projects that simplify technology and make learning development practical, hands-on, and collaborative.
 
-## Our Repositories
+We believe that technology should be understandable, accessible, and empowering for everyone.  
+Our mission is to build tools and resources that make complex concepts easier to grasp — helping developers and students learn, create, and innovate with confidence.
+
+**Website:** [www.xplnhub.tech](http://www.xplnhub.tech)
+
 ---
+
+## Projects
+
 ### 1. CodeNarrator
+**Technology:** JavaScript  
+**Purpose:** Helps developers understand code and accelerate learning across all skill levels.
 
-**Technology:** JavaScript
-**Purpose:** Make code understandable and accelerate learning for developers of all levels.
 **Features:**
+- Line-by-line explanations of code  
+- Highlights key functions, variables, and logic  
+- Narrative-style walkthroughs of code execution  
 
-* Line-by-line explanations of code
-* Highlights key functions and variables
-* Narrative-style walkthroughs of code execution
+---
 
 ### 2. Finmate
-
-**Technology:** TypeScript
+**Technology:** TypeScript  
 **Purpose:** Personal finance tracker designed for students to manage budgets, track expenses, and achieve financial goals.
-**Features:**
 
-* Expense tracking
-* Budget creation
-* Savings goal management
-* Easy-to-read financial reports
+**Features:**
+- Expense tracking and categorization  
+- Budget creation and management  
+- Savings goal tracking  
+- Simple and readable financial reports  
+
+---
 
 ### 3. Insight-Py
+**Technology:** Python  
+**Purpose:** Provides deep insights into Python code to help developers write cleaner, more efficient, and maintainable programs.
 
-**Technology:** Python
-**Purpose:** Provide deep insights into Python code to help developers write cleaner, more efficient, and maintainable code.
 **Features:**
+- Static and dynamic code analysis  
+- Dependency visualization  
+- Performance insights and recommendations  
 
-* Code analysis
-* Dependency visualization
-* Performance insights
+---
 
-## Join Us
+### 4. Mamba
+**Technology:** Python  
+**Purpose:** A modern, lightweight frontend framework/library for building component-based web applications.
 
-We’re always looking for contributors to help us build and improve our projects. Whether you’re an experienced developer or a student looking to gain experience, your contributions are welcome!
+**Features:**
+- Component-based architecture  
+- Seamless integration with Tailwind CSS and Bootstrap  
+- CLI tool for scaffolding, running, and building projects  
 
-* **Contribute:** Start by reading the `CONTRIBUTING.md` file in each repository.
-* **Contact:** Questions? Open an issue in the `.github` repository
+---
 
-Thank you for your interest in **XplnHUB**! We’re excited to create, learn, and innovate together.
+### 5. Arx
+**Technology:** Node.js  
+**Purpose:** A modern backend framework designed for developers who need to handle multiple data formats effortlessly.
 
+**Features:**
+- Express-style routing  
+- Automatic parsing for JSON, CSV, XML, YAML, form-data, and binary  
+- Modular and efficient architecture  
 
-If you want, I can also create a **short, catchy version** for your GitHub homepage README that immediately grabs attention and encourages contributions—it’ll be perfect for visitors scanning your org page. Do you want me to do that?
+---
+
+## Contributing
+
+We welcome contributors of all experience levels.  
+If you are a beginner, student, or experienced developer — you are encouraged to get involved.
+
+**How to contribute:**
+1. Fork a project repository  
+2. Check open issues or suggest new ones  
+3. Submit a pull request  
+
+We regularly host collaborative sprints, mentorship sessions, and open discussions to help contributors learn and grow.
+
+---
+
+## Community
+
+Join our community to learn, collaborate, and innovate.  
+Stay updated with project news and development discussions.
+
+- Website: [www.xplnhub.tech](http://www.xplnhub.tech)  
+- GitHub: [XplnHub](https://github.com/XplnHub)  
+- Community channels coming soon
+
+---
+
+## Vision
+
+To make learning through building the new standard in developer education.  
+To create tools that explain, frameworks that empower, and projects that inspire.
+
+**XplnHub — Simplify. Learn. Build. Innovate.**
