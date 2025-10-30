@@ -1,96 +1,54 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Star, GitFork, Code2 } from 'lucide-react';
+import { ExternalLink, Star, GitFork, Code2, Loader2, AlertCircle } from 'lucide-react';
 import { Repository } from '../types';
 
 const Projects = () => {
-  const [repositories, setRepositories] = useState<Repository[]>([
-    {
-      name: 'CodeNarrator',
-      language: 'JavaScript',
-      description:
-        'Transform complex code into clear, narrative explanations. CodeNarrator provides line-by-line breakdowns, highlights key concepts, and creates engaging walkthroughs that make understanding code effortless.',
-      url: 'https://github.com/XplnHUB/CodeNarrator',
-      highlights: [
-        'Line-by-line code analysis',
-        'Interactive narrative walkthroughs',
-        'Key concept highlighting',
-        'Multi-language support',
-      ],
-    },
-    {
-      name: 'Finmate',
-      language: 'TypeScript',
-      description:
-        'A comprehensive finance management tool designed for students. Track expenses, manage budgets, set savings goals, and generate insightful reports to take control of your financial future.',
-      url: 'https://github.com/XplnHUB/Finmate',
-      highlights: [
-        'Expense tracking & categorization',
-        'Budget management tools',
-        'Savings goal planning',
-        'Visual financial reports',
-      ],
-    },
-    {
-      name: 'Insight-Py',
-      language: 'Python',
-      description:
-        'Deep dive into Python codebases with powerful analysis tools. Visualize dependencies, assess performance bottlenecks, and gain comprehensive insights into your Python projects.',
-      url: 'https://github.com/XplnHUB/Insight-Py',
-      highlights: [
-        'Dependency visualization',
-        'Performance analysis',
-        'Code quality metrics',
-        'Interactive diagrams',
-      ],
-    },
-    {
-      name: 'xplnhub-insight-py',
-      language: 'TypeScript',
-      description:
-        'Frontend Website of Insight-Py. It is a Python CLI tool that generates detailed reports combining static code analysis with AI explanations. Analyze your codebases with AI-powered insights and get a deeper understanding of your projects.',
-      url: 'https://github.com/XplnHUB/xplnhub-insight-py',
-      highlights: [
-        'Python CLI tool',
-        'Static code analysis',
-        'AI-powered insights',
-        'Code quality metrics',
-      ],
-    }
-  ]);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // 🧠 Fetch star and fork counts dynamically
   useEffect(() => {
-    async function fetchRepoStats() {
-      const updatedRepos = await Promise.all(
-        repositories.map(async (repo) => {
-          try {
-            const res = await fetch(
-              `https://api.github.com/repos/XplnHUB/${repo.name}`
-            );
-            if (!res.ok) throw new Error('Failed to fetch repo');
-            const data = await res.json();
-            return {
-              ...repo,
-              stars: data.stargazers_count,
-              forks: data.forks_count,
-            };
-          } catch (error) {
-            console.error(`Error fetching ${repo.name}:`, error);
-            return repo;
-          }
-        })
-      );
-
-      setRepositories(updatedRepos);
+    async function fetchRepositories() {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('https://api.github.com/orgs/XplnHUB/repos');
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch repositories: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        const transformedRepos: Repository[] = data
+          .filter((repo: any) => repo.name !== '.github')
+          .map((repo: any) => ({
+            name: repo.name,
+            language: repo.language || 'Unknown',
+            description: repo.description || 'No description available',
+            url: repo.html_url,
+            highlights: [],
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+          }));
+        
+        setRepositories(transformedRepos);
+      } catch (err) {
+        console.error('Error fetching repositories:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load repositories');
+      } finally {
+        setLoading(false);
+      }
     }
 
-    fetchRepoStats();
+    fetchRepositories();
   }, []);
 
   const languageColors: { [key: string]: string } = {
     JavaScript: '#f7df1e',
-    TypeScript: '#3178c6',
+    TypeScript: '#38f96fff',
     Python: '#3776ab',
   };
 
@@ -111,8 +69,36 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="space-y-12">
-          {repositories.map((repo, index) => (
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center py-20"
+          >
+            <Loader2 className="w-16 h-16 text-cyan-400 animate-spin mb-4" />
+            <p className="text-xl text-gray-300">Loading projects...</p>
+          </motion.div>
+        )}
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-red-500/10 backdrop-blur-sm rounded-3xl p-8 border border-red-500/30 mb-8"
+          >
+            <div className="flex items-center justify-center space-x-3 text-red-400">
+              <AlertCircle className="w-8 h-8" />
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Failed to Load Projects</h3>
+                <p className="text-red-300">{error}</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {!loading && !error && repositories.length > 0 && (
+          <div className="space-y-12">
+            {repositories.map((repo, index) => (
             <motion.div
               key={repo.name}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
@@ -148,8 +134,9 @@ const Projects = () => {
                     {repo.description}
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                    {repo.highlights.map((highlight, i) => (
+                  {repo.highlights && repo.highlights.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                      {repo.highlights.map((highlight, i) => (
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, x: -20 }}
@@ -160,8 +147,9 @@ const Projects = () => {
                         <Star className="w-4 h-4 flex-shrink-0" />
                         <span className="text-sm">{highlight}</span>
                       </motion.div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="flex flex-wrap gap-4">
                     <motion.a
@@ -208,8 +196,21 @@ const Projects = () => {
                 </motion.div>
               </div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && repositories.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <Code2 className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+            <p className="text-xl text-gray-400">No projects found</p>
+          </motion.div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
