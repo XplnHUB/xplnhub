@@ -56,7 +56,31 @@ const Projects = () => {
         'AI-powered insights',
         'Code quality metrics',
       ],
-    }
+    },
+    {
+      name: 'Snakeskin',
+      language: 'Python',
+      description:
+        'A modern, lightweight frontend framework for building component-based web applications, with seamless Tailwind CSS and Bootstrap integration and CLI tooling for scaffolding, running, and building projects.',
+      url: 'https://github.com/XplnHUB/xplnhub-snakeskin',
+      highlights: [
+        'Component-based architecture',
+        'Tailwind CSS & Bootstrap integration',
+        'CLI scaffolding, dev server, and build tooling',
+      ],
+    },
+    {
+      name: 'NewGate',
+      language: 'JavaScript',
+      description:
+        'A modern, lightweight Node.js backend framework with Express-style routing and automatic multi-format parsing for JSON, CSV, XML, YAML, form-data, and binary data.',
+      url: 'https://github.com/XplnHUB/newgatejs',
+      highlights: [
+        'Express-style routing',
+        'Automatic multi-format parsing',
+        'Built-in security (XXE protection, upload limits)',
+      ],
+    },
   ]);
 
   // 🧠 Fetch star and fork counts dynamically
