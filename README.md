@@ -46,9 +46,9 @@ Our mission is to build tools and resources that make complex concepts easier to
 
 ---
 
-### 4. Mamba
+### 4. Snakeskin
 **Technology:** Python  
-**Purpose:** A modern, lightweight frontend framework/library for building component-based web applications.
+**Purpose:** A modern, lightweight frontend framework for building component-based web applications.
 
 **Features:**
 - Component-based architecture  
@@ -57,14 +57,25 @@ Our mission is to build tools and resources that make complex concepts easier to
 
 ---
 
-### 5. Arx
+### 5. NewGate
 **Technology:** Node.js  
 **Purpose:** A modern backend framework designed for developers who need to handle multiple data formats effortlessly.
 
 **Features:**
 - Express-style routing  
 - Automatic parsing for JSON, CSV, XML, YAML, form-data, and binary  
-- Modular and efficient architecture  
+- Built-in security (XXE protection, upload limits)  
+
+---
+
+### 6. xplnhub-insight-py
+**Technology:** TypeScript  
+**Purpose:** Frontend website for Insight-Py — a Python CLI tool that generates detailed reports combining static code analysis with AI explanations.
+
+**Features:**
+- Static code analysis dashboard  
+- AI-powered insight explanations  
+- Code quality metrics visualization  
 
 ---
 
