@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Twitter, Send, MapPin } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, MapPin } from 'lucide-react';
+import { SiMastodon } from 'react-icons/si';
 
 const Contact = () => {
   const socialLinks = [
@@ -16,10 +17,10 @@ const Contact = () => {
       color: 'from-blue-600 to-blue-800',
     },
     {
-      icon: Twitter,
-      label: 'Twitter',
-      url: '#',
-      color: 'from-cyan-500 to-blue-500',
+      icon: SiMastodon,
+      label: 'Mastodon',
+      url: 'https://mastodon.social/@codemaverick',
+      color: 'from-violet-500 to-purple-700',
     },
   ];
 
