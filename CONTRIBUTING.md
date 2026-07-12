@@ -11,7 +11,7 @@ Thank you for your interest in contributing to **XplnHUB**! Whether you are fixi
 ## Development Workflow
 
 - Keep your branch in sync by pulling from `main` regularly.
-- Run `npm run lint` before committing to catch style or formatting issues.
+- This repository uses Husky to manage pre-commit hooks. Before every commit, `npm run lint` and `npm run typecheck` will automatically run to ensure code quality(for stylistic, formatting and good code practice) and data type safety.
 - Include screenshots or recordings for UI-related changes when possible.
 
 ## Coding Guidelines
