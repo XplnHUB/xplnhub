@@ -57,7 +57,7 @@ function App() {
         </motion.div>
       </AnimatePresence>
 
-      <Footer />
+      <Footer onNavigate={setCurrentPage} />
     </div>
   );
 }
