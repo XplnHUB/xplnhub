@@ -39,6 +39,8 @@ const Community = () => {
     Users,
   };
 
+  // Workflow component (no state needed)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -118,29 +120,108 @@ const Community = () => {
           </p>
 
           <div className="relative">
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 transform -translate-y-1/2" />
+            {/* Desktop: horizontal connecting line */}
+            <div className="hidden lg:block absolute left-0 right-0 top-12 h-1 bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 relative z-10">
+            {/* Mobile/Tablet: vertical connecting line */}
+            <div className="lg:hidden absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500/20 via-cyan-500/40 to-transparent" />
+
+            {/* Desktop Grid Layout */}
+            <div className="hidden lg:grid grid-cols-5 gap-8">
               {workflow.map((step, index) => {
                 const Icon = iconMap[step.icon as keyof typeof iconMap];
                 return (
                   <motion.div
                     key={step.title}
-                    initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: 0.8 + index * 0.15, duration: 0.6 }}
-                    whileHover={{ scale: 1.1, y: -10 }}
-                    className="flex flex-col items-center text-center"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 + index * 0.12, duration: 0.6 }}
+                    className="flex flex-col items-center text-center group"
                   >
+                    {/* step badge with number */}
+                    <div className="relative mb-6">
+                      <div className="absolute -top-2 -left-2 w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-cyan-500/50">
+                        {index + 1}
+                      </div>
+
+                      {/* icon container with hover glow */}
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 8 }}
+                        transition={{ duration: 0.4 }}
+                        className="w-24 h-24 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center relative"
+                        style={{
+                          boxShadow: '0 8px 20px rgba(2,6,23,0.5)',
+                        }}
+                      >
+                        {/* hover glow effect */}
+                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{
+                          boxShadow: 'inset 0 0 20px rgba(56,189,248,0.4), 0 0 30px rgba(59,130,246,0.5)',
+                        }} />
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="relative z-10"
+                        >
+                          <Icon className="w-12 h-12 text-white" />
+                        </motion.div>
+                      </motion.div>
+                    </div>
+
+                    {/* step title and description */}
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">{step.title}</h3>
+                    <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors">{step.description}</p>
+
+                    {/* connector dot to timeline (hidden on mobile) */}
+                    <div className="hidden lg:block absolute -top-8 w-2 h-2 bg-cyan-400 rounded-full left-1/2 -translate-x-1/2 group-hover:w-3 group-hover:h-3 group-hover:shadow-lg group-hover:shadow-cyan-400/70 transition-all duration-300" />
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Mobile/Tablet: Vertical Timeline Layout */}
+            <div className="lg:hidden flex flex-col gap-6 pl-20">
+              {workflow.map((step, index) => {
+                const Icon = iconMap[step.icon as keyof typeof iconMap];
+                return (
+                  <motion.div
+                    key={step.title}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
+                    className="flex gap-4 group relative"
+                  >
+                    {/* Connection point on timeline */}
+                    <div className="absolute -left-16 top-6 w-4 h-4 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/60 group-hover:w-5 group-hover:h-5 group-hover:shadow-cyan-400/80 transition-all duration-300" />
+
+                    {/* Icon container */}
                     <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                      className="w-24 h-24 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/50"
+                      whileHover={{ scale: 1.08, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0 relative"
+                      style={{
+                        boxShadow: '0 6px 16px rgba(2,6,23,0.5)',
+                      }}
                     >
-                      <Icon className="w-12 h-12 text-white" />
+                      <div className="absolute inset-0 rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{
+                        boxShadow: 'inset 0 0 16px rgba(56,189,248,0.3), 0 0 24px rgba(59,130,246,0.4)',
+                      }} />
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                        className="relative z-10"
+                      >
+                        <Icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                      </motion.div>
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
-                    <p className="text-gray-300 leading-relaxed">{step.description}</p>
+
+                    {/* Text content */}
+                    <div className="flex flex-col justify-center flex-1 pt-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs md:text-sm font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors">Step {index + 1}</span>
+                      </div>
+                      <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">{step.title}</h3>
+                      <p className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors leading-snug">{step.description}</p>
+                    </div>
                   </motion.div>
                 );
               })}
