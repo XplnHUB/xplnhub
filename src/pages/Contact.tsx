@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send, MapPin } from 'lucide-react';
-import { SiMastodon } from 'react-icons/si';
-
+import { Mail, Github, Linkedin, Send, MapPin, X } from 'lucide-react';
+import { SiX } from '@icons-pack/react-simple-icons';
 const Contact = () => {
   const socialLinks = [
     {
@@ -13,14 +12,14 @@ const Contact = () => {
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      url: '#',
+      url: 'https://www.linkedin.com/company/xplnhub/',
       color: 'from-blue-600 to-blue-800',
     },
     {
-      icon: SiMastodon,
-      label: 'Mastodon',
-      url: 'https://mastodon.social/@codemaverick',
-      color: 'from-violet-500 to-purple-700',
+      icon: SiX,
+      label: 'X',
+      url: 'https://x.com/CodeMaverick143',
+      color: 'from-black to-zinc-900',
     },
   ];
 
@@ -142,7 +141,7 @@ const Contact = () => {
                   type="email"
                   id="email"
                   className="w-full px-4 py-3 bg-white/10 border border-cyan-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors"
-                  placeholder="Youremail"
+                  placeholder="Your email"
                 />
               </div>
 
