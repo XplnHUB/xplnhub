@@ -9,6 +9,9 @@ import Community from './pages/Community';
 import Contributors from './pages/Contributors';
 import Join from './pages/Join';
 import Contact from './pages/Contact';
+import License from './pages/License';
+import Term from './pages/Term';
+import Privacy from './pages/Privacy';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -35,6 +38,12 @@ function App() {
         return <Join key="join" />;
       case 'contact':
         return <Contact key="contact" />;
+      case 'license':
+        return <License key="license" onNavigate={setCurrentPage} />;
+      case 'term':
+        return <Term key="term" onNavigate={setCurrentPage} />;
+      case 'privacy':
+        return <Privacy key="privacy" onNavigate={setCurrentPage} />;
       default:
         return <Home key="home" onNavigate={setCurrentPage} />;
     }
@@ -57,7 +66,7 @@ function App() {
         </motion.div>
       </AnimatePresence>
 
-      <Footer />
+      <Footer onNavigate={setCurrentPage} />
     </div>
   );
 }
