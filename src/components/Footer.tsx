@@ -48,22 +48,24 @@ const Footer = ({ onNavigate }: FooterProps) => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {['About', 'Projects', 'Community', 'Contributors', 'Join Us'].map((link) => (
-                <li key={link}>
-                  <motion.a
-                    href={`#${link.toLowerCase().replace(' ', '-')}`}
-                    whileHover={{ x: 5 }}
-                    className="text-gray-400 hover:text-cyan-400 transition-colors"
-                  >
-                    {link}
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
+  <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
+  <ul className="space-y-2">
+    {['About', 'Projects', 'Community', 'Contributors', 'Join Us'].map((link) => (
+      <li key={link}>
+        <motion.a
+          onClick={() => {
+            onNavigate(link.toLowerCase() === 'join us' ? 'join' : link.toLowerCase());
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          whileHover={{ x: 5 }}
+          className="text-gray-400 hover:text-cyan-400 transition-colors cursor-pointer"
+        >
+          {link}
+        </motion.a>
+      </li>
+    ))}
+  </ul>
+</div>
           <div>
             <h3 className="text-white font-bold text-lg mb-4">Connect</h3>
             <div className="space-y-3">

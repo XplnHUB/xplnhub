@@ -248,7 +248,7 @@ const Community = () => {
                 step: '01',
                 title: 'Explore Issues',
                 description:
-                  'Browse open issues labeled "good first issue" to find beginner-friendly tasks',
+                  'Browse open issues labelled "good first issue" to find beginner-friendly tasks',
               },
               {
                 step: '02',
