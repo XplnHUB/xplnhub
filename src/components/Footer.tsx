@@ -3,7 +3,7 @@ import { Github, Mail, Heart } from 'lucide-react';
 
 type FooterProps = {
   onNavigate?: (page: string) => void;
-};
+}
 
 const Footer = ({ onNavigate }: FooterProps) => {
   const currentYear = new Date().getFullYear();

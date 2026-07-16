@@ -39,21 +39,27 @@ const Contributors = () => {
           continue;
         }
 
-        const response = await fetch(`${repo.contributors_url}?per_page=100`);
-        if (!response.ok) {
-          continue;
-        }
-
-        const data = await response.json();
-        for (const contributor of data) {
-          if (contributorMap.has(contributor.login)) {
-            contributorMap.get(contributor.login)!.contributions += contributor.contributions;
-          } else {
-            contributorMap.set(contributor.login, {
-              ...contributor,
-              name: contributor.login,
-            });
+        // Fix for Issue #4
+        try {
+          const response = await fetch(`${repo.contributors_url}?per_page=100`);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch contributors for ${repo.name}: ${response.status}`);
           }
+
+          const data = await response.json();
+          for (const contributor of data) {
+            if (contributorMap.has(contributor.login)) {
+              contributorMap.get(contributor.login)!.contributions += contributor.contributions;
+            } else {
+              contributorMap.set(contributor.login, {
+                ...contributor,
+                name: contributor.login,
+              });
+            }
+          }
+        } catch (loopError) {
+          // sends the loop error up to the main catch block below (to line 96)
+          throw loopError;
         }
       }
 
@@ -67,7 +73,7 @@ const Contributors = () => {
 
           const userResponse = await fetch(`https://api.github.com/users/${login}`);
           if (!userResponse.ok) {
-            return;
+            return; // fallback: keeps the username as the display name if API fails
           }
 
           const userData = await userResponse.json();
