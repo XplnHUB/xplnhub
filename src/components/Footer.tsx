@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { Github, Mail, Heart } from 'lucide-react';
 
-interface FooterProps {
-  onNavigate: (page: string) => void;
-}
+type FooterProps = {
+  onNavigate?: (page: string) => void;
+};
 
 const Footer = ({ onNavigate }: FooterProps) => {
   const currentYear = new Date().getFullYear();
@@ -104,33 +104,30 @@ const Footer = ({ onNavigate }: FooterProps) => {
             <Heart className="inline w-4 h-4 text-pink-500" /> by the community.
           </p>
           <div className="flex items-center space-x-6 text-sm text-gray-400">
-            <motion.a
-              href="https://github.com/XplnHUB"
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.button
+              type="button"
+              onClick={() => onNavigate?.('privacy')}
               whileHover={{ scale: 1.1 }}
               className="hover:text-cyan-400 transition-colors"
             >
               Privacy
-            </motion.a>
-            <motion.a
-              href="https://github.com/XplnHUB"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              className="hover:text-cyan-400 transition-colors"
-            >
-              Terms
-            </motion.a>
-            <motion.a
-              href="https://github.com/XplnHUB"
-              target="_blank"
-              rel="noopener noreferrer"
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => onNavigate?.('license')}
               whileHover={{ scale: 1.1 }}
               className="hover:text-cyan-400 transition-colors"
             >
               License
-            </motion.a>
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => onNavigate?.('term')}
+              whileHover={{ scale: 1.1 }}
+              className="hover:text-cyan-400 transition-colors"
+            >
+              Terms
+            </motion.button>
           </div>
         </div>
       </div>
