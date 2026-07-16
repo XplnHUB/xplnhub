@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Twitter, Send, MapPin } from 'lucide-react';
-
+import { Mail, Github, Linkedin, Send, MapPin, X } from 'lucide-react';
+import { SiX } from '@icons-pack/react-simple-icons';
 const Contact = () => {
   const socialLinks = [
     {
@@ -12,14 +12,14 @@ const Contact = () => {
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      url: '#',
+      url: 'https://www.linkedin.com/company/xplnhub/',
       color: 'from-blue-600 to-blue-800',
     },
     {
-      icon: Twitter,
-      label: 'Twitter',
-      url: '#',
-      color: 'from-cyan-500 to-blue-500',
+      icon: SiX,
+      label: 'X',
+      url: 'https://x.com/CodeMaverick143',
+      color: 'from-black to-zinc-900',
     },
   ];
 

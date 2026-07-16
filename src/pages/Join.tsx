@@ -186,7 +186,7 @@ const Join = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <motion.a
-                href="https://github.com/XplnHUB"
+                href="https://github.com/orgs/XplnHUB/repositories?q=good-first-issues%3A%3E0"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
